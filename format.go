@@ -11,19 +11,21 @@ func JsonFmtHandleFunc(w http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		w.Write([]byte(`{"ok": "no", "msg": "` + err.Error() + `"}`))
+		w.Write(body)
+		w.Write([]byte{'\n'})
+		w.Write([]byte(err.Error()))
 		return
 	}
 
 	formatted, err := Format(body)
 	if err != nil {
-		w.Write([]byte(`{"ok": "no", "msg": "` + err.Error() + `"}`))
+		w.Write(body)
+		w.Write([]byte{'\n'})
+		w.Write([]byte(err.Error()))
 		return
 	}
 
-	w.Write([]byte(`{"ok": "yes", "msg": "`))
 	w.Write(formatted)
-	w.Write([]byte(`"}`))
 }
 
 func Format(content []byte) ([]byte, error) {
