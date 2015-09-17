@@ -7,6 +7,11 @@ import (
 	"net/http"
 )
 
+//  JsonFmtHandleFunc can be used as follows:
+//  func main() {
+//		http.HandleFunc("/fmt", gojsonfmt.JsonFmtHandleFunc)
+//		http.ListenAndServe(":11080", nil)
+//	}
 func JsonFmtHandleFunc(w http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
 	body, err := ioutil.ReadAll(req.Body)
